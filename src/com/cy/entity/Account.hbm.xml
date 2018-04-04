@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.cy.entity.Account" table="account" catalog="bank">
+		<id name="accountid" type="java.lang.Integer">
+		    <column name="accountid"></column>
+		    <generator class="native"></generator>
+		</id>
+		<property name="username" type="java.lang.String">
+			<column name="username" length="50"></column>
+		</property>
+		<property name="password" type="java.lang.String">
+			<column name="password" length="50"></column>
+		</property>
+		<property name="balance" type="java.lang.Double">
+			<column name="balance" precision="18"></column>
+		</property>
+		<many-to-one name="status" class="com.cy.entity.Status" fetch="select" lazy="false">
+			<column name="status"></column>
+		</many-to-one>
+		<set name="transactionLogs" inverse="true" lazy="false" cascade="delete">
+			<key>
+				<column name="accountid"></column>
+			</key>
+			<one-to-many class="com.cy.entity.TransactionLog"/>
+		</set>
+		<set name="personinfos" inverse="true" lazy="false" cascade="delete">
+			<key>
+				<column name="accountid"></column>
+			</key>
+			<one-to-many class="com.cy.entity.Personinfo"/>
+		</set>
+	</class>
+</hibernate-mapping>

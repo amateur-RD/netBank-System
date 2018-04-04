@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+    <!-- 普通用户登录action -->
+    <package name="user" namespace="/user" extends="struts-default">
+        <action name="user_*" class="user" method="{1}">
+            <result name="success">/success.jsp</result>
+            <result name="login">/login.jsp</result>
+            <result name="input">/login.jsp</result>
+        </action>
+        <action name="changepwd" class="user" method="changepwd">
+            <result name="input">/changepwd.jsp</result>
+            <result name="message">/message.jsp</result>
+        </action>
+    </package>
+    <!-- 修改用户信息action -->
+    <package name="info" namespace="/info" extends="struts-default">
+        <action name="info_*" class="personinfo" method="{1}">
+            <result name="login">/login.jsp</result>
+            <result name="input">/modify.jsp</result>
+            <result name="message">/message.jsp</result>
+        </action>
+    </package>
+    <!-- 交易（存款、取款、转账）action -->
+    <package name="transaction" namespace="/transaction" extends="struts-default">
+        <action name="deposit" class="transaction" method="deposit">
+            <result name="input">/deposit.jsp</result>
+            <result name="message">/message.jsp</result>
+        </action>
+        <action name="withdraw" class="transaction" method="withdraw">
+            <result name="input">/withdraw.jsp</result>
+            <result name="message">/message.jsp</result>
+        </action>
+        <action name="transfer" class="transaction" method="transfer">
+            <result name="input">/transfer.jsp</result>
+            <result name="message">/message.jsp</result>
+        </action>
+        <action name="list" class="transaction" method="list">
+            <result name="success">/transactionlog.jsp</result>
+        </action>
+    </package>
+    <!-- 管理员action -->
+    <package name="admin" namespace="/admin" extends="struts-default">
+        <!-- 管理员登录actin -->
+        <action name="login" class="admin" method="login">
+            <result name="success">manager.jsp</result>
+            <result name="input">/login.jsp</result>
+        </action>
+        <!-- 管理员操作action -->
+        <!-- 使用通配符和动态值配置AdminAction   method="{1}"表示第一个通配符* -->
+        <action name="*" class="admin" method="{1}">
+            <result name="login">/login.jsp</result>
+            <result name="users">/admin/users.jsp</result>
+            <result name="add">/admin/add.jsp</result>
+            <result name="input">/message.jsp</result>
+            <result name="message">/message.jsp</result>
+            <!-- 将请求重定向到别的action，相当于重新发起一次请求，并携带请求参数 -->
+            <result name="list" type="redirectAction">
+    			<param name="actionName">listUsers</param>
+    			<param name="status.id">${status.id}</param>
+    		</result>
+        </action>
+    </package>
+    
+</struts>

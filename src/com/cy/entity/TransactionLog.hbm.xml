@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.cy.entity.TransactionLog" table="transaction_log" catalog="bank">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"></column>
+            <generator class="native"></generator>
+        </id>
+        <many-to-one name="account" class="com.cy.entity.Account" fetch="select" lazy="false">
+            <column name="accountid"></column>
+        </many-to-one>
+        <property name="otherid" type="java.lang.Integer">
+            <column name="otherid" length="4"></column>
+        </property>
+        <property name="tr_money" type="java.lang.Double">
+            <column name="tr_money" precision="18"></column>
+        </property>
+        <property name="datetime" type="java.lang.String">
+            <column name="datetime" length="50"></column>
+        </property>
+        <many-to-one name="transactionType" class="com.cy.entity.TransactionType" fetch="select" lazy="false">
+            <column name="ta_type"></column>
+        </many-to-one>     
+    </class>
+</hibernate-mapping>

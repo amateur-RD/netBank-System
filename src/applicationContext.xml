@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/bank"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="admin"></property>
+		<property name="initialSize" value="3"></property>
+		<property name="maxActive" value="500"></property>
+		<property name="maxIdle" value="2"></property>
+		<property name="minIdle" value="1"></property>
+	</bean>
+	
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="mappingResources">
+			<list>
+			    <value>com/cy/entity/Account.hbm.xml</value>
+			    <value>com/cy/entity/Personinfo.hbm.xml</value>
+			    <value>com/cy/entity/Admin.hbm.xml</value>
+			    <value>com/cy/entity/Status.hbm.xml</value>
+			    <value>com/cy/entity/TransactionLog.hbm.xml</value>
+			    <value>com/cy/entity/TransactionType.hbm.xml</value>
+			    
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">		
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 定义UserDaoImpl,并给类中的sessionFactory属性注入值 -->
+	<bean id="userDao" class="com.cy.dao.impl.UserDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>	
+	<bean id="userService" class="com.cy.service.impl.UserServiceImpl">
+		<property name="userDaoInter" ref="userDao"></property>
+	</bean>
+	<!-- 配置普通用户 -->	
+	<bean id="user" class="com.cy.action.UserAction" scope="prototype" />
+	<!-- 配置管理员用户 -->
+	<bean id="admin" class="com.cy.action.AdminAction" scope="prototype" />
+	
+	<!-- 定义PersoninfoDaoImpl,并给类中的sessionFactory属性注入值 -->
+	<bean id="personinfoDao" class="com.cy.dao.impl.PersoninfoDaoImpl">
+	    <property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>	
+	<bean id="personinfoService" class="com.cy.service.impl.PersoninfoServiceImpl">
+	    <property name="personinfoDaoInter" ref="personinfoDao"></property>	    
+	</bean>
+	<bean id="personinfo" class="com.cy.action.PersoninfoAction" scope="prototype" />
+	
+	<!-- 定义TransactionDaoImpl,并给类中的sessionFactory属性注入值 -->
+	<bean id="transactionDao" class="com.cy.dao.impl.TransactionDaoImpl">
+	    <property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="transactionService" class="com.cy.service.impl.TransactionServiceImpl">
+	    <property name="transactionDaoInter" ref="transactionDao"></property>
+	    <property name="UserDaoInter" ref="userDao"></property>
+	</bean>
+	<bean id="transaction" class="com.cy.action.Transaction" scope="prototype">
+	    <property name="UserServiceInter" ref="userService"></property>
+	    <property name="TransactionServiceInter" ref="transactionService"></property>
+	</bean>
+	
+	
+	
+	<!-- 声明Hibernate事务管理器   统一管理sessionFactory事务 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<context:annotation-config />
+	
+	<!-- 启动事务注解 -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+</beans>

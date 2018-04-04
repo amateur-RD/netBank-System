@@ -1,0 +1,163 @@
+body, h1, p, h4 {
+	margin: 0;
+	padding: 0;
+	color: #666;
+	font-family: "微软雅黑";
+}
+
+a {
+	text-decoration: none;
+	color: #444;
+	font-size: 12px;
+}
+
+a:hover {
+	text-decoration: underline;
+	color: blue;
+}
+
+span {
+	font-size: 12px;
+}
+
+.icon-system {
+	background: no-repeat url(../img/system.png) left 5px center;
+}
+
+.icon-search {
+	background: no-repeat url(../img/search.png) left 5px center;
+}
+
+.icon-add {
+	background: no-repeat url(../img/edit_add.png) left 5px center;
+}
+
+.icon-remove {
+	background: no-repeat url(../img/edit_remove.png) left 5px center;
+}
+
+.icon-edit {
+	background: no-repeat url(../img/edit-new.png) left 5px center;
+}
+
+.icon-reload {
+	background: no-repeat url(../img/reload.png) left 5px center;
+}
+
+.nav-tree {
+	width: 80%;
+}
+
+.nav-tree li {
+	line-height: 30px;
+}
+
+.nav .item {
+	cursor: pointer;
+}
+
+.nav-tree li>a {
+	display: block;
+	text-indent: 25px;
+}
+
+.nav-tree li>a:hover {
+	text-decoration: none;
+}
+
+.table {
+	width: 95%;
+	margin: 0 auto;
+	text-align: center;
+	border-spacing: 0;
+}
+
+.table .checkbox {
+	width: 40px;
+}
+
+.table td, .table th {
+	border-bottom: 1px dotted;
+	padding: 3px 0;
+}
+
+.table tbody tr:hover, .table .active {
+	cursor: pointer;
+	background-color: #FFCB00;
+}
+
+.pagenation {
+	position: absolute;
+	width: 100%;
+	bottom: 0px;
+	height: 30px;
+	line-height: 30px;
+	background: repeat-x url(../img/nav.png);
+}
+
+.pagenation .left {
+	float: left;
+}
+
+.pagenation .left a {
+	display: inline-block;
+	margin: 0 10px;
+}
+
+.pagenation .right {
+	float: right;
+	margin: 0 20px 0 0;
+}
+
+.pagenation .right span {
+	margin: 0 5px;
+}
+
+.btn {
+	display: inline-block;
+	padding: 0 10px;
+	height: 30px;
+	line-height: 30px;
+	text-indent: 30px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.btn:hover {
+	box-shadow: 0 0 1px;
+	text-decoration: none;
+}
+
+.dialog {
+	position: absolute;
+	background-color: #5BD0D9;
+	top: 0px;
+	left: 0px;
+}
+
+.warning {
+	display: none;
+	top: 200px;
+	left: 230px;
+	position: absolute;
+	min-width: 100px;
+	border-radius: 5px;
+	background-color: #F8C301;
+	box-shadow: 0 0 1px #F8C301;
+	z-index: 9999;
+}
+
+.warning .text {
+	padding: 10px;
+}
+
+.warning .arrow {
+	position: absolute;
+	width: 0;
+	height: 0;
+	font-size: 0;
+	top: 5px;
+	left: -16px;
+	border: 8px solid #F8C301;
+	border-color: #fff #F8C301 #fff #fff;
+}
